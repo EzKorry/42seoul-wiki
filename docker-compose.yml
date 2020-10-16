@@ -1,0 +1,51 @@
+version: "3"
+services:
+  db:
+    container_name: wiki_mariadb
+    hostname: mariadb
+    image: mariadb:10
+    restart: unless-stopped
+    volumes:
+      - db-data:/var/lib/mysql
+    # ports:
+    #   - 9090:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=hellomylady
+      - MYSQL_DATABASE=wiki
+      - MYSQL_USER=eszqsc112
+      - MYSQL_PASSWORD=whatdoyouwantfromme
+
+  wiki:
+    container_name: wiki_engine
+    # hostname: proxy
+    image: requarks/wiki:2
+    depends_on: 
+      - db
+    ports:
+      - 80:3000
+      - 443:3443
+    # ports:
+    #   - '80:80' # common web
+    #   - '443:443' # https
+    #   - '4040:4040' # graphql
+    #   - '5000:5000' # (dev)localhost cinesopa proxy
+    # volumes:
+    #   - ./proxy/nginx.conf:/etc/nginx/nginx.conf:ro
+    #   - ./proxy/web.conf:/etc/nginx/web.conf:ro
+    #   - ./proxy/config:/etc/nginx/config:ro
+    #   - ./proxy/common:/etc/nginx/common:ro
+    #   - /etc/letsencrypt:/etc/ssl/private/letsencrypt:ro
+    #   - ./server/config:/etc/ssl/private/server/config
+    environment:
+      - DB_TYPE=mariadb
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USER=eszqsc112
+      - DB_PASS=whatdoyouwantfromme
+      - DB_NAME=wiki
+      - SSL_ACTIVE=1
+      - LETSENCRYPT_DOMAIN=wiki.42seoul.work
+      - LETSENCRYPT_EMAIL=eszqsc112@naver.com
+
+volumes:
+  db-data:
