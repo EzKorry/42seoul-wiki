@@ -7,8 +7,6 @@ services:
     restart: unless-stopped
     volumes:
       - db-data:/var/lib/mysql
-      - wiki-data:/wiki/data
-      - ./server/modules/authentication/42:/wiki/server/modules/authentication/42:ro
     # ports:
     #   - 9090:3306
     environment:
@@ -26,6 +24,10 @@ services:
     ports:
       - 80:3000
       - 443:3443
+    volumes:
+      - wiki-data:/wiki/data
+      - ./server/modules/authentication/42:/wiki/server/modules/authentication/42:ro
+
     # ports:
     #   - '80:80' # common web
     #   - '443:443' # https
