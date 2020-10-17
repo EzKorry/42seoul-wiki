@@ -26,6 +26,7 @@ services:
       - 443:3443
     volumes:
       - wiki-data:/wiki/data
+      - ./config.yml:/wiki/config.yml:ro
       - ./server/modules/authentication/42:/wiki/server/modules/authentication/42:ro
 
     # ports:

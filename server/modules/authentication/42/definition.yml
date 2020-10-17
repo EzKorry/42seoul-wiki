@@ -8,9 +8,7 @@ website: https://api.intra.42.fr/apidoc
 isAvailable: true
 useForm: false
 scopes:
-  - openid
-  - profile
-  - email
+  - public
 props:
   clientId:
     type: String
