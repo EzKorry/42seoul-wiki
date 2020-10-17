@@ -1,0 +1,29 @@
+key: '42'
+title: 42Auth
+description: 42 authentication
+author: requarks.io
+# logo: https://static.requarks.io/logo/auth0.svg
+# color: deep-orange
+website: https://api.intra.42.fr/apidoc
+isAvailable: true
+useForm: false
+scopes:
+  - openid
+  - profile
+  - email
+props:
+  clientId:
+    type: String
+    title: Client ID
+    hint: Application Client ID
+    order: 1
+  clientSecret:
+    type: String
+    title: Client Secret
+    hint: Application Client Secret
+    order: 2
+  # callbackURL:
+  #   type: String
+  #   title: Client Secret
+  #   hint: Application Client Secret
+  #   order: 3
