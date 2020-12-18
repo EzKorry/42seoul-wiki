@@ -1,5 +1,5 @@
-key: '42'
-title: 42Auth
+key: auth42
+title: '42 Auth'
 description: 42 authentication
 author: requarks.io
 # logo: https://static.requarks.io/logo/auth0.svg

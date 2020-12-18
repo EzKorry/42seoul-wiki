@@ -8,7 +8,7 @@ const OAuth2Strategy = require('passport-oauth2');
 
 module.exports = {
   init (passport, conf) {
-    passport.use('42', new OAuth2Strategy({
+    passport.use('auth42', new OAuth2Strategy({
       authorizationURL: 'https://api.intra.42.fr/oauth/authorize',
       tokenURL: 'https://api.intra.42.fr/oauth/token', 
       clientID: conf.clientId,
