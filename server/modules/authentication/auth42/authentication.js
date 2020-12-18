@@ -43,10 +43,10 @@
 // }
 
 const FortyTwoStrategy = require("passport-42").Strategy;
-console.log("42 account loading");
 module.exports = {
   init(passport, conf) {
-    WIKI.logger.log(JSON.stringify(conf));
+    WIKI.logger.log('info', JSON.stringify(conf));
+
     //passport.use('42',
     // passport.serializeUser((user, done) => {
     //   // Strategy 성공 시 호출됨
@@ -57,45 +57,54 @@ module.exports = {
     //   // 매개변수 user는 serializeUser의 done의 인자 user를 받은 것
     //   done(null, user); // 여기의 user가 req.user가 됨
     // });
-    passport.use(
-      new FortyTwoStrategy(
-        {
-          clientID: conf.clientId,
-          clientSecret: conf.clientSecret,
-          callbackURL: conf.callbackURL,
-          // domain: conf.domain,
+    try {
 
-          // clientID: conf.clientId,
-          // clientSecret: conf.clientSecret,
-          // callbackURL: conf.callbackURL,
-          // passReqToCallback: true,
-          // }, (req, accessToken, refreshToken, extraParams, profile, cb) => {
-        },
-        async (accessToken, refreshToken, profile, cb) => {
-          WIKI.logger.log(JSON.stringify(req));
-          WIKI.logger.log(JSON.stringify(accessToken));
-          WIKI.logger.log(JSON.stringify(refreshToken));
-          WIKI.logger.log(JSON.stringify(extraParams));
-          // WIKI.logger.log(JSON.stringify(req));
-          // console.dir(accessToken);
-          // console.dir(refreshToken);
-          // console.log(extraParams);
-          // console.dir(profile);
-          // cb(null, profile);
-          try {
-            const user = await WIKI.models.users.processProfile({
-              providerKey: req.params.strategy,
-              profile: {
-                ...profile,
-              },
-            });
-            cb(null, user);
-          } catch (err) {
-            cb(err, null);
+      passport.use(
+        new FortyTwoStrategy(
+          {
+            clientID: conf.clientId,
+            clientSecret: conf.clientSecret,
+            callbackURL: conf.callbackURL,
+            scope: 'public',
+            passReqToCallback: true,
+
+            // domain: conf.domain,
+
+            // clientID: conf.clientId,
+            // clientSecret: conf.clientSecret,
+            // callbackURL: conf.callbackURL,
+            // passReqToCallback: true,
+            // }, (req, accessToken, refreshToken, extraParams, profile, cb) => {
+          },
+          async (accessToken, refreshToken, profile, cb) => {
+            WIKI.logger.log('info', JSON.stringify(req));
+            WIKI.logger.log('info', JSON.stringify(accessToken));
+            WIKI.logger.log('info', JSON.stringify(refreshToken));
+            WIKI.logger.log('info', JSON.stringify(extraParams));
+            // WIKI.logger.log(JSON.stringify(req));
+            // console.dir(accessToken);
+            // console.dir(refreshToken);
+            // console.log(extraParams);
+            // console.dir(profile);
+            // cb(null, profile);
+            try {
+              const user = await WIKI.models.users.processProfile({
+                providerKey: req.params.strategy,
+                profile: {
+                  ...profile,
+                },
+              });
+              cb(null, user);
+            } catch (err) {
+              cb(err, null);
+            }
           }
-        }
-      )
-    );
+        )
+      );
+      WIKI.logger.log('info', 'passport use clear!');
+    } catch (e) {
+      WIKI.logger.log('info', JSON.stringify(e));
+    }
   },
 };
 
