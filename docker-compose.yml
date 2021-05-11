@@ -27,7 +27,7 @@ services:
     volumes:
       - wiki-data:/wiki/data
       - ./config.yml:/wiki/config.yml:ro
-      - ./server/modules/authentication/auth42:/wiki/server/modules/authentication/auth42
+      - ./authentication:/wiki/server/modules/authentication
 
     # ports:
     #   - '80:80' # common web
